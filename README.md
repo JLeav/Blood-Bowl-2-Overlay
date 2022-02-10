@@ -18,6 +18,6 @@ File structure:
     <<<>>>RacesInput extends JComboBox - The dropdown menu for picking the races of the teams. Gets the string of all the races from (Basically just exists, just needs to become a class rather than just a variable)
   
   src/nonCode - all the noncode things, images, string constants
-  src/pics - all the pngs/jpegs (probably all pngs) used
-  src/pics/races - the pngs used to show what race the team is
-  src/pics/'X' - the pngs used to show what position a player is on a team, 'X' = the race name (ex: "Human", "Orc", "Dwarf", etc.)
+  src/nonCode/pngs - all the pngs used
+  src/nonCode/pngs/races - the pngs used to show what race the team is
+  src/nonCode/pngs/'X' - the pngs used to show what position a player is on a team, 'X' = the race name (ex: "Human", "Orc", "Dwarf", etc.)
