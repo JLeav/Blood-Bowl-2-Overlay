@@ -9,12 +9,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import helpers.Helpers;
+import view.output.RosteredPlayerField;
+import view.output.RaceField;
+
 public class OverlayGui extends JFrame{
 	
 	private GridBagConstraints gbc;
 	private OverlayInput input;
 	
-	private JLabel[]racesField;
+	private RaceField[]raceField;
+	private RosteredPlayerField[][]rosteredPlayerField;
 
 	public static void main(String[] args) {
 		OverlayGui asdf=new OverlayGui();
@@ -28,7 +33,8 @@ public class OverlayGui extends JFrame{
 		
 		this.initGbc();
 		
-		this.initRacesField();//<<<>>>Other parts of the gui get added here
+		this.initRaceField();//<<<>>>Other parts of the gui get added here
+		this.initRosteredPlayersField();//<<<>>>Add to this later, currently just a label for the player positions
 		
 		this.input=new OverlayInput(this);
 		
@@ -45,19 +51,36 @@ public class OverlayGui extends JFrame{
 		this.gbc=new GridBagConstraints();
 		this.gbc.gridx=0;
 		this.gbc.gridy=0;
-		this.gbc.ipadx=50;
-		this.gbc.ipady=50;
+		this.gbc.ipadx=5;
+		this.gbc.ipady=5;
 		this.getContentPane().setLayout(new GridBagLayout());
 	}
 	
-	private void initRacesField() {
-		this.racesField=new JLabel[2];
+	private void initRaceField() {
+		this.gbc.gridy=0;this.gbc.gridx=0;
+		
+		this.raceField=new RaceField[2];
 		
 		for(int a=0;a<2;a++) {
-			this.racesField[a]=new JLabel(a==0?"Human":"Human");
-			myAdd(this.racesField[a]);this.gbc.gridx++;
+			this.raceField[a]=new RaceField(Helpers.RACES[0]);
+			myAdd(this.raceField[a]);this.gbc.gridx++;
 		}
 	}
 	
-	JLabel[] getRacesField() {return this.racesField;}
+	private void initRosteredPlayersField() {
+		this.gbc.gridy=1;this.gbc.gridx=0;
+		
+		this.rosteredPlayerField=new RosteredPlayerField[2][16];
+		
+		for(int a=0;a<2;a++) {
+			for(int b=0;b<16;b++) {
+				this.rosteredPlayerField[a][b]=new RosteredPlayerField();
+				this.myAdd(this.rosteredPlayerField[a][b]);this.gbc.gridy++;
+			}
+			this.gbc.gridx++;this.gbc.gridy=1;
+		}
+	}
+	
+	public RaceField[] getRaceField() {return this.raceField;}
+	public RosteredPlayerField[][]getRosteredPlayerField(){return this.rosteredPlayerField;}
 }

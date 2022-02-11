@@ -2,28 +2,33 @@ package view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import control.listeners.RaceListener;
+import view.input.RaceInput;
+import view.input.RosteredPlayerInput;
+import view.output.RaceField;
+import view.output.RosteredPlayerField;
+
 public class OverlayInput extends JDialog {
 	
 	private GridBagConstraints gbc;
 	
-	private JComboBox<String>[]racesInput;//<<<>>>Maybe make this it's own class later on so that I'm not storing the listener here too. Also helps with keeping the naming consistent
-	private RacesListener[]racesListener;
-	
-	
-	public final String[]RACES= {"Human","Orc","Dwarf","Skaven","Dark Elf"};
+	private RaceInput[]racesInput;
+	private RosteredPlayerInput[][]rosteredPlayerInput;
 	
 	public OverlayInput(OverlayGui owner) {
 		super(owner);
 		
 		this.initGbc();
 		
-		this.initRacesInput(owner.getRacesField());
+		this.initRacesInput(owner.getRaceField());
+		this.initRosteredPlayerInput(owner.getRosteredPlayerField());
 		
 		this.pack();
 		this.setVisible(true);
@@ -35,22 +40,34 @@ public class OverlayInput extends JDialog {
 		this.gbc=new GridBagConstraints();
 		this.gbc.gridx=0;
 		this.gbc.gridy=0;
-		this.gbc.ipadx=50;
-		this.gbc.ipady=50;
+		this.gbc.ipadx=5;
+		this.gbc.ipady=5;
 		this.getContentPane().setLayout(new GridBagLayout());
 	}
 	
-	private void initRacesInput(JLabel[]racesField) {
-		this.racesInput=new JComboBox[2];
-		this.racesListener=new RacesListener[2];
+	private void initRacesInput(RaceField[]racesField) {
+		this.gbc.gridy=0;this.gbc.gridx=0;
+		
+		this.racesInput=(RaceInput[])new RaceInput[2];
 		
 		for(int a=0;a<2;a++) {
-			this.racesInput[a]=new JComboBox<String>(RACES);
+			this.racesInput[a]=new RaceInput(racesField[a]);
 			this.myAdd(racesInput[a]);this.gbc.gridx++;
-			
-			this.racesListener[a]=new RacesListener(this.racesInput[a],racesField[a]);
 		}
+	}
+	
+	private void initRosteredPlayerInput(RosteredPlayerField[][]rosteredPlayerField) {
+		this.gbc.gridy=1;this.gbc.gridx=0;
 		
+		this.rosteredPlayerInput=new RosteredPlayerInput[2][16];
 		
+		for(int a=0;a<2;a++) {
+			for(int b=0;b<16;b++) {
+				this.rosteredPlayerInput[a][b]=new RosteredPlayerInput(rosteredPlayerField[a][b]);
+				this.racesInput[a].addRosteredPlayerInput(this.rosteredPlayerInput[a][b]);
+				this.myAdd(this.rosteredPlayerInput[a][b]);this.gbc.gridy++;
+			}
+			this.gbc.gridx++;this.gbc.gridy=1;
+		}
 	}
 }
