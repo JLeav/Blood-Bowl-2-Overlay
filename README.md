@@ -5,17 +5,29 @@ Currently, this will launch two GUIs; one that can edit the information, and one
 
 File structure:
   src - everything required to run
+    InputGridBagThings - list of the grid bag constraints used for different assets (just to keep track of)
+    OutputGridBagThings - list of the grid bag constraints used for different assets (just to keep track of)
+  
   src/control - eventually will contain the true main function to the finished product
-  <<<>>>src/control/listeners - all the listeners for different elements of the input
-    RacesListener implements ActionListener - Resets inputs for the rest of the team (as everything just changed) <<<>>>not there right now
+  src/control/listeners - all the listeners for different elements of the input
+    RacesListener implements ActionListener - Resets inputs for the rest of the team (as everything just changed)
+    RosteredPlayerPositionListener implements ActionListener - Resets the rest of the rostered player input when changed
+  
+  src/helpers
+    Helpers - a list of strings and such
   
   src/view - anything that involves a GUI element
     OverlayGui extends JFrame - output GUI
     OverlayInput extends JDialog - input GUI
-  src/view/output
-    <<<>>>RacesField extends JLabel - The label that contains the image of the race. Currently shows a string rather than (Basically exists, just needs to become a class rather than just a variable)
   src/view/input
-    <<<>>>RacesInput extends JComboBox - The dropdown menu for picking the races of the teams. Gets the string of all the races from (Basically just exists, just needs to become a class rather than just a variable)
+    RacesInput extends JComboBox - The dropdown menu for picking the races of the teams
+    RosteredPlayerInput extends JPanel - The panel that contains all the input for the rostered players
+      Currently contains only the input for the position
+      Will contain inputs for skills/cas's/spp
+  src/view/output
+    RacesField extends JLabel - The label that contains the image of the race. Currently shows a string rather than an image
+    RosteredPlayerField extends JPanel - The panel that contains all the info about rostered players (this'll actually not be used in the end
+  
   
   src/nonCode - all the noncode things, images, string constants
   src/nonCode/pngs - all the pngs used
